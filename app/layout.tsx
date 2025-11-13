@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { SkipToContent } from "@/components/skip-to-content";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -97,6 +98,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
+        <SkipToContent />
         <ErrorBoundary>
           <ThemeProvider
             attribute="class"

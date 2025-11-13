@@ -135,7 +135,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="relative z-10">
+      <main id="main-content" className="relative z-10">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-16 md:py-24">
           <motion.div

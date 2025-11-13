@@ -2,7 +2,7 @@
 
 **Last Updated**: November 13, 2025
 **Current Sprint**: Sprint 3 (Week 3)
-**Overall Progress**: 70% Complete
+**Overall Progress**: 72% Complete
 
 ---
 
@@ -15,7 +15,7 @@
 | **Landing Page** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Sprint 1: Chat Core** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Sprint 2: Features** | ✅ Complete | 100% | Nov 13, 2025 |
-| **Sprint 3: Polish** | 🔄 In Progress | 50% | Nov 13, 2025 (in progress) |
+| **Sprint 3: Polish** | 🔄 In Progress | 60% | Nov 13, 2025 (in progress) |
 
 ---
 
@@ -586,7 +586,7 @@
 ## ✨ Milestone 6: Sprint 3 - Polish & Optimization (IN PROGRESS 🔄)
 
 **Target Completion**: End of Week 3-4
-**Current Progress**: 50%
+**Current Progress**: 60%
 
 ### Week 3: UX Enhancements
 
@@ -655,18 +655,25 @@
 
 **Completion**: November 13, 2025 ✅
 
-#### Accessibility (WCAG 2.1 AA)
-- [ ] Screen reader testing (NVDA/JAWS)
-- [ ] Keyboard navigation:
-  - [ ] Tab order correct
-  - [ ] Escape to close modals
-  - [ ] Arrow keys for lists
-- [ ] ARIA labels on all interactive elements
-- [ ] Focus indicators visible
-- [ ] Color contrast validation (4.5:1 minimum)
-- [ ] Alt text for all images
-- [ ] Semantic HTML structure
-- [ ] Skip to main content link
+#### Accessibility (WCAG 2.1 AA) ✅
+- [x] Keyboard navigation:
+  - [x] Tab order correct (natural DOM order)
+  - [x] Escape to close modals (corrections panel)
+  - [ ] Arrow keys for lists (not implemented - future enhancement)
+- [x] ARIA labels on all interactive elements:
+  - [x] Send message button
+  - [x] Back button in chat header
+  - [x] Settings menu button
+  - [x] Close corrections panel button
+  - [x] Corrections panel role="complementary"
+- [x] Focus indicators visible (Tailwind default focus-visible styling)
+- [x] Skip to main content link (hidden until focused)
+- [x] Semantic HTML structure (header, main, aside elements)
+- [ ] Screen reader testing (NVDA/JAWS) (not tested - future)
+- [ ] Color contrast validation (4.5:1 minimum) (needs audit)
+- [ ] Alt text for all images (SVG icons with aria-labels)
+
+**Completion**: November 13, 2025 ✅ (Core accessibility)
 
 #### Conversation History
 - [ ] Store conversations in localStorage

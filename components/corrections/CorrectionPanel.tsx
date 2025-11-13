@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,18 @@ export function CorrectionPanel({ className }: CorrectionPanelProps) {
   const { isCorrectionsVisible, toggleCorrectionsVisibility, corrections } =
     useStore();
 
+  // Handle Escape key to close panel
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isCorrectionsVisible) {
+        toggleCorrectionsVisibility();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isCorrectionsVisible, toggleCorrectionsVisibility]);
+
   return (
     <AnimatePresence>
       {isCorrectionsVisible && (
@@ -27,10 +40,13 @@ export function CorrectionPanel({ className }: CorrectionPanelProps) {
             exit={{ opacity: 0 }}
             onClick={toggleCorrectionsVisibility}
             className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
+            aria-hidden="true"
           />
 
           {/* Panel */}
           <motion.aside
+            role="complementary"
+            aria-label="Corrections panel"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -60,6 +76,7 @@ export function CorrectionPanel({ className }: CorrectionPanelProps) {
                 size="icon"
                 onClick={toggleCorrectionsVisibility}
                 className="h-8 w-8"
+                aria-label="Close corrections panel"
               >
                 <X className="w-4 h-4" />
               </Button>

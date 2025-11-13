@@ -106,6 +106,7 @@ export function ChatInput({
               disabled={disabled || !message.trim() || isOverLimit}
               size="icon"
               className="h-[60px] w-[60px] shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transition-all hover:scale-105"
+              aria-label="Send message"
             >
               <motion.div
                 animate={isSending ? { x: [0, 5, 0] } : {}}

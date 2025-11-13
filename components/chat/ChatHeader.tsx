@@ -62,6 +62,7 @@ export function ChatHeader() {
               size="icon"
               onClick={handleBack}
               className="shrink-0"
+              aria-label="Go back to scenarios"
             >
               <ArrowLeft className="w-5 h-5" />
             </Button>
@@ -82,7 +83,7 @@ export function ChatHeader() {
           {/* Right: Settings */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" aria-label="Open settings menu">
                 <Settings className="w-5 h-5" />
               </Button>
             </DropdownMenuTrigger>
