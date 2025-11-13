@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { MessageList } from "@/components/chat/MessageList";
@@ -10,6 +10,7 @@ import { nanoid } from "nanoid";
 
 export default function ChatPage() {
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
   const {
     selectedLanguage,
     selectedDifficulty,
@@ -37,23 +38,92 @@ export default function ChatPage() {
     };
 
     addMessage(userMessage);
-
-    // TODO: Call API to get AI response
-    // For now, just simulate typing
     setIsTyping(true);
+    setError(null);
 
-    // Simulate AI response (will be replaced with actual API call)
-    setTimeout(() => {
-      const aiMessage = {
-        id: nanoid(),
-        role: "assistant" as const,
-        content:
-          "I will respond to your message here. This is a placeholder until we integrate OpenAI.",
-        timestamp: new Date(),
-      };
-      addMessage(aiMessage);
+    try {
+      // Prepare messages for API
+      const apiMessages = messages
+        .concat([userMessage])
+        .map((msg) => ({
+          role: msg.role,
+          content: msg.content,
+        }));
+
+      // Call streaming API
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: apiMessages,
+          language: selectedLanguage,
+          difficulty: selectedDifficulty,
+          scenario: selectedScenario,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.error || `API error: ${response.status}`
+        );
+      }
+
+      // Read streaming response
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let accumulatedResponse = "";
+
+      if (!reader) {
+        throw new Error("No response body");
+      }
+
+      while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        accumulatedResponse += chunk;
+      }
+
       setIsTyping(false);
-    }, 2000);
+
+      // Parse the complete response
+      try {
+        const parsed = JSON.parse(accumulatedResponse);
+        const aiMessage = {
+          id: nanoid(),
+          role: "assistant" as const,
+          content: parsed.message || accumulatedResponse,
+          corrections: parsed.corrections || [],
+          timestamp: new Date(),
+        };
+        addMessage(aiMessage);
+
+        // Add vocabulary items to store
+        if (parsed.vocabulary && parsed.vocabulary.length > 0) {
+          // TODO: Add vocabulary items to store when that function is implemented
+        }
+      } catch (e) {
+        // If parsing fails, use raw content
+        const aiMessage = {
+          id: nanoid(),
+          role: "assistant" as const,
+          content: accumulatedResponse,
+          timestamp: new Date(),
+        };
+        addMessage(aiMessage);
+      }
+    } catch (err) {
+      setIsTyping(false);
+      const errorMessage =
+        err instanceof Error ? err.message : "An error occurred";
+      setError(errorMessage);
+      console.error("Chat error:", err);
+    }
   };
 
   if (!selectedLanguage || !selectedDifficulty || !selectedScenario) {
@@ -70,6 +140,17 @@ export default function ChatPage() {
 
       {/* Header */}
       <ChatHeader />
+
+      {/* Error Display */}
+      {error && (
+        <div className="container mx-auto max-w-4xl px-4 pt-4">
+          <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
+            <p className="text-red-800 dark:text-red-200 text-sm">
+              {error}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Messages */}
       <MessageList messages={messages} isTyping={isTyping} />
