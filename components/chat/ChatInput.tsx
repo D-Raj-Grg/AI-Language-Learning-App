@@ -12,14 +12,6 @@ interface ChatInputProps {
   placeholder?: string;
 }
 
-const placeholders: Record<string, string> = {
-  es: "Escribe tu mensaje...",
-  fr: "Écrivez votre message...",
-  de: "Schreiben Sie Ihre Nachricht...",
-  it: "Scrivi il tuo messaggio...",
-  ja: "メッセージを入力...",
-};
-
 export function ChatInput({
   onSend,
   disabled = false,

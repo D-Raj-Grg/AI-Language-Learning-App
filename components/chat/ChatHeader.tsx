@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Settings, MessageSquare, RotateCcw, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +28,6 @@ export function ChatHeader() {
   const {
     selectedScenario,
     selectedDifficulty,
-    selectedLanguage,
     isCorrectionsVisible,
     toggleCorrectionsVisibility,
     clearConversation,
@@ -43,6 +43,9 @@ export function ChatHeader() {
   const handleNewConversation = () => {
     clearConversation();
     setShowNewConversationDialog(false);
+    toast.success("Conversation cleared", {
+      description: "Starting fresh! Your vocabulary has been saved.",
+    });
     router.push("/scenarios");
   };
 

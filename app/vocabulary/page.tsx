@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import {
   Select,
   SelectContent,
@@ -45,9 +46,15 @@ export default function VocabularyPage() {
 
   // Remove vocabulary item
   const removeVocabularyItem = (id: string) => {
+    const item = vocabulary.find((v) => v.id === id);
     useStore.setState((state) => ({
       vocabulary: state.vocabulary.filter((item) => item.id !== id),
     }));
+    if (item) {
+      toast.success("Word removed", {
+        description: `"${item.word}" removed from your vocabulary`,
+      });
+    }
   };
 
   // Calculate stats
@@ -179,7 +186,13 @@ export default function VocabularyPage() {
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
                       <AlertDialogAction
-                        onClick={() => resetAll()}
+                        onClick={() => {
+                          const count = vocabulary.length;
+                          resetAll();
+                          toast.success("All vocabulary cleared", {
+                            description: `Removed ${count} word${count > 1 ? "s" : ""} from your list`,
+                          });
+                        }}
                         className="bg-red-600 hover:bg-red-700"
                       >
                         Clear All

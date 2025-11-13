@@ -8,6 +8,7 @@ import { ChatInput } from "@/components/chat/ChatInput";
 import { CorrectionPanel } from "@/components/corrections/CorrectionPanel";
 import { useStore } from "@/lib/store";
 import { nanoid } from "nanoid";
+import { toast } from "sonner";
 
 export default function ChatPage() {
   const router = useRouter();
@@ -124,6 +125,12 @@ export default function ChatPage() {
               messageId: userMessage.id, // Link to the user's message that had the error
             });
           });
+          toast.success(
+            `Found ${parsed.corrections.length} correction${parsed.corrections.length > 1 ? "s" : ""}`,
+            {
+              description: "Check the corrections panel for details",
+            }
+          );
         }
 
         // Add vocabulary items to store
@@ -143,6 +150,12 @@ export default function ChatPage() {
               reviewCount: 0,
             });
           });
+          toast.success(
+            `Added ${parsed.vocabulary.length} new word${parsed.vocabulary.length > 1 ? "s" : ""}`,
+            {
+              description: "View your vocabulary list to review",
+            }
+          );
         }
       } catch {
         // If parsing fails, use raw content
@@ -160,6 +173,9 @@ export default function ChatPage() {
         err instanceof Error ? err.message : "An error occurred";
       setError(errorMessage);
       console.error("Chat error:", err);
+      toast.error("Failed to send message", {
+        description: errorMessage,
+      });
     }
   };
 
