@@ -64,9 +64,23 @@ export function MessageList({ messages, isTyping = false }: MessageListProps) {
         className="absolute inset-0 overflow-y-auto"
       >
         <div className="container mx-auto max-w-4xl p-4 space-y-4">
-          {messages.map((message) => (
-            <ChatMessage key={message.id} message={message} />
-          ))}
+          <AnimatePresence mode="popLayout">
+            {messages.map((message, index) => (
+              <motion.div
+                key={message.id}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{
+                  duration: 0.3,
+                  delay: index === messages.length - 1 ? 0.1 : 0,
+                  ease: "easeOut",
+                }}
+              >
+                <ChatMessage message={message} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
 
           {/* Typing Indicator */}
           {isTyping && (

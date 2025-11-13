@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, KeyboardEvent } from "react";
 import { Send } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -18,6 +19,7 @@ export function ChatInput({
   placeholder: customPlaceholder,
 }: ChatInputProps) {
   const [message, setMessage] = useState("");
+  const [isSending, setIsSending] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const maxLength = 500;
 
@@ -38,8 +40,11 @@ export function ChatInput({
   const handleSend = () => {
     const trimmedMessage = message.trim();
     if (trimmedMessage && !disabled) {
+      setIsSending(true);
       onSend(trimmedMessage);
       setMessage("");
+      // Reset animation after a brief moment
+      setTimeout(() => setIsSending(false), 300);
     }
   };
 
@@ -85,14 +90,31 @@ export function ChatInput({
           </div>
 
           {/* Send Button */}
-          <Button
-            onClick={handleSend}
-            disabled={disabled || !message.trim() || isOverLimit}
-            size="icon"
-            className="h-[60px] w-[60px] shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+          <motion.div
+            animate={
+              isSending
+                ? {
+                    scale: [1, 0.9, 1],
+                    rotate: [0, -10, 0],
+                  }
+                : {}
+            }
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <Send className="w-5 h-5" />
-          </Button>
+            <Button
+              onClick={handleSend}
+              disabled={disabled || !message.trim() || isOverLimit}
+              size="icon"
+              className="h-[60px] w-[60px] shrink-0 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 transition-all hover:scale-105"
+            >
+              <motion.div
+                animate={isSending ? { x: [0, 5, 0] } : {}}
+                transition={{ duration: 0.3 }}
+              >
+                <Send className="w-5 h-5" />
+              </motion.div>
+            </Button>
+          </motion.div>
         </div>
 
         {/* Hint */}
