@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Settings, MessageSquare, RotateCcw } from "lucide-react";
+import { ArrowLeft, Settings, MessageSquare, RotateCcw, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -87,6 +87,10 @@ export function ChatHeader() {
               <DropdownMenuItem onClick={toggleCorrectionsVisibility}>
                 <MessageSquare className="w-4 h-4 mr-2" />
                 {isCorrectionsVisible ? "Hide" : "Show"} Corrections
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push("/vocabulary")}>
+                <BookOpen className="w-4 h-4 mr-2" />
+                View Vocabulary
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem

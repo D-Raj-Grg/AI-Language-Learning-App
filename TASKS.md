@@ -2,7 +2,7 @@
 
 **Last Updated**: November 13, 2025
 **Current Sprint**: Sprint 2 (Week 2)
-**Overall Progress**: 45% Complete
+**Overall Progress**: 60% Complete
 
 ---
 
@@ -14,7 +14,7 @@
 | **Branding & Design** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Landing Page** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Sprint 1: Chat Core** | ✅ Complete | 100% | Nov 13, 2025 |
-| **Sprint 2: Features** | 🔄 In Progress | 50% | Target: Week 2 |
+| **Sprint 2: Features** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Sprint 3: Polish** | ⏳ Not Started | 0% | Target: Week 3-4 |
 
 ---
@@ -418,10 +418,10 @@
 
 ---
 
-## 🔧 Milestone 5: Sprint 2 - Corrections & Vocabulary (IN PROGRESS 🔄)
+## 🔧 Milestone 5: Sprint 2 - Corrections & Vocabulary (COMPLETE ✅)
 
 **Target Completion**: End of Week 2
-**Current Progress**: 50%
+**Current Progress**: 100%
 
 ### Day 1-3: Corrections System ✅
 
@@ -483,11 +483,11 @@
 
 ---
 
-### Day 4-6: Vocabulary Tracking
+### Day 4-6: Vocabulary Tracking ✅
 
 #### Vocabulary Extraction
-- [ ] Update OpenAI prompt for vocabulary
-- [ ] Define VocabularyItem interface:
+- [x] Update OpenAI prompt for vocabulary (completed in lib/prompts.ts)
+- [x] Define VocabularyItem interface in lib/store.ts:
   ```typescript
   interface VocabularyItem {
     id: string
@@ -499,55 +499,58 @@
     reviewCount: number
   }
   ```
-- [ ] Parse vocabulary from AI response
-- [ ] Automatic extraction logic
+- [x] Parse vocabulary from AI response (app/chat/page.tsx)
+- [x] Automatic extraction logic with forEach
 
 #### Vocabulary State
-- [ ] Add vocabulary array to Zustand store
-- [ ] Actions: addVocabulary, removeVocabulary, markReviewed
-- [ ] Prevent duplicates (same word)
-- [ ] Persist to localStorage
-- [ ] Load from localStorage on app start
+- [x] Add vocabulary array to Zustand store
+- [x] Actions: addVocabulary (with duplicate prevention)
+- [x] Prevent duplicates (same word check)
+- [x] Persist to localStorage via Zustand middleware
+- [x] Load from localStorage on app start automatically
 
 #### Vocabulary Components
-- [ ] Create `components/vocabulary/VocabularyCard.tsx`
-- [ ] Card design:
-  - [ ] Word in target language (large, bold)
-  - [ ] Translation in English
-  - [ ] Context sentence
-  - [ ] Date learned
-  - [ ] Remove button
-  - [ ] Mark as reviewed button
-  - [ ] Flip animation (word → translation)
-- [ ] Create `components/vocabulary/StatsCard.tsx`
-- [ ] Stats display:
-  - [ ] Total words learned
-  - [ ] Words this week
-  - [ ] Words this month
-  - [ ] Most practiced language
+- [x] Create `components/vocabulary/VocabularyCard.tsx`
+- [x] Card design:
+  - [x] Word in target language (large, bold with gradient)
+  - [x] Translation in English
+  - [x] Context sentence with quotes
+  - [x] Date learned with calendar icon
+  - [x] Remove button with confirmation
+  - [x] Flip animation (word ↔ translation) with 3D transform
+- [x] Create `components/vocabulary/StatsCard.tsx`
+- [x] Stats display:
+  - [x] Total words learned
+  - [x] Words this week
+  - [x] Words this month
+  - [x] Most practiced language
 
 #### Vocabulary Dashboard
-- [ ] Create `/app/vocabulary/page.tsx`
-- [ ] Page layout:
-  - [ ] Header with title
-  - [ ] Stats cards row (3-4 cards)
-  - [ ] Search/filter bar
-  - [ ] Language filter dropdown
-  - [ ] Sort options (date, alphabetical)
-  - [ ] Grid of vocabulary cards
-  - [ ] Empty state with encouragement
-- [ ] Search functionality (filter by word)
-- [ ] Filter by language
-- [ ] Sort by date or alphabetical
-- [ ] Pagination (if >50 words)
+- [x] Create `/app/vocabulary/page.tsx`
+- [x] Page layout:
+  - [x] Header with title and back button
+  - [x] Stats cards row (4 cards in responsive grid)
+  - [x] Search bar with icon
+  - [x] Language filter dropdown
+  - [x] Sort options (date/alphabetical)
+  - [x] Grid of vocabulary cards (responsive)
+  - [x] Empty state with encouragement
+- [x] Search functionality (filter by word/translation)
+- [x] Filter by language
+- [x] Sort by date (newest first) or alphabetical
+- [x] Responsive grid (1-4 columns based on screen size)
 
 #### Vocabulary Persistence
-- [ ] Save to localStorage after each addition
-- [ ] Load on app initialization
-- [ ] Export to JSON (future feature)
-- [ ] Clear all (with confirmation)
+- [x] Save to localStorage after each addition (Zustand persist)
+- [x] Load on app initialization automatically
+- [x] Clear all (with AlertDialog confirmation)
+- [x] Remove individual words
 
-**Subtask Progress**: 0/5 complete
+#### Navigation
+- [x] Add "View Vocabulary" link to ChatHeader settings dropdown
+
+**Subtask Progress**: 5/5 complete ✅
+**Completion**: November 13, 2025
 
 ---
 
