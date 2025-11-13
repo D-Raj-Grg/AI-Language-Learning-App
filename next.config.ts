@@ -1,4 +1,9 @@
 import type { NextConfig } from "next";
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -42,10 +47,5 @@ const nextConfig: NextConfig = {
     ];
   },
 };
-
-// Bundle analyzer (enable with ANALYZE=true pnpm build)
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
-});
 
 export default withBundleAnalyzer(nextConfig);

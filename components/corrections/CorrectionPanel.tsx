@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { CorrectionCard } from "./CorrectionCard";
 import { useStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { track } from "@vercel/analytics";
 
 interface CorrectionPanelProps {
   className?: string;
@@ -28,6 +29,15 @@ export function CorrectionPanel({ className }: CorrectionPanelProps) {
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isCorrectionsVisible, toggleCorrectionsVisibility]);
+
+  // Track when panel is viewed
+  useEffect(() => {
+    if (isCorrectionsVisible && corrections.length > 0) {
+      track("correction_viewed", {
+        correctionCount: corrections.length,
+      });
+    }
+  }, [isCorrectionsVisible, corrections.length]);
 
   return (
     <AnimatePresence>

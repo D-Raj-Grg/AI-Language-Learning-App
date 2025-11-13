@@ -9,6 +9,7 @@ import { CorrectionPanel } from "@/components/corrections/CorrectionPanel";
 import { useStore } from "@/lib/store";
 import { nanoid } from "nanoid";
 import { toast } from "sonner";
+import { track } from "@vercel/analytics";
 
 export default function ChatPage() {
   const router = useRouter();
@@ -32,6 +33,17 @@ export default function ChatPage() {
     }
   }, [selectedLanguage, selectedDifficulty, selectedScenario, router]);
 
+  // Track conversation started
+  useEffect(() => {
+    if (selectedLanguage && selectedDifficulty && selectedScenario && messages.length === 0) {
+      track("conversation_started", {
+        language: selectedLanguage,
+        difficulty: selectedDifficulty,
+        scenario: selectedScenario.id,
+      });
+    }
+  }, [selectedLanguage, selectedDifficulty, selectedScenario, messages.length]);
+
   const handleSendMessage = async (content: string) => {
     // Add user message
     const userMessage = {
@@ -44,6 +56,13 @@ export default function ChatPage() {
     addMessage(userMessage);
     setIsTyping(true);
     setError(null);
+
+    // Track message sent
+    track("message_sent", {
+      language: selectedLanguage,
+      difficulty: selectedDifficulty,
+      messageLength: content.length,
+    });
 
     try {
       // Prepare messages for API
@@ -150,6 +169,13 @@ export default function ChatPage() {
               reviewCount: 0,
             });
           });
+
+          // Track vocabulary saved
+          track("vocabulary_saved", {
+            language: selectedLanguage,
+            wordCount: parsed.vocabulary.length,
+          });
+
           toast.success(
             `Added ${parsed.vocabulary.length} new word${parsed.vocabulary.length > 1 ? "s" : ""}`,
             {
