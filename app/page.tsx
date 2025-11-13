@@ -1,64 +1,291 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  MessageCircle,
+  Sparkles,
+  BookOpen,
+  Zap,
+  Globe,
+  TrendingUp,
+  ArrowRight,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+const languages = [
+  { code: "es", name: "Spanish", native: "Español", flag: "🇪🇸" },
+  { code: "fr", name: "French", native: "Français", flag: "🇫🇷" },
+  { code: "de", name: "German", native: "Deutsch", flag: "🇩🇪" },
+  { code: "it", name: "Italian", native: "Italiano", flag: "🇮🇹" },
+  { code: "ja", name: "Japanese", native: "日本語", flag: "🇯🇵" },
+];
+
+const difficulties = [
+  {
+    level: "beginner",
+    label: "Beginner",
+    description: "Simple sentences, common vocabulary",
+    icon: "📚",
+  },
+  {
+    level: "intermediate",
+    label: "Intermediate",
+    description: "Complex sentences, varied tenses",
+    icon: "📖",
+  },
+  {
+    level: "advanced",
+    label: "Advanced",
+    description: "Native-like complexity, idioms",
+    icon: "🎓",
+  },
+];
+
+const features = [
+  {
+    icon: MessageCircle,
+    title: "Real Conversations",
+    description: "Practice natural dialogue with AI in your target language",
+  },
+  {
+    icon: Sparkles,
+    title: "Instant Corrections",
+    description: "Get real-time feedback on grammar and usage",
+  },
+  {
+    icon: BookOpen,
+    title: "Vocabulary Tracking",
+    description: "Automatically save and review new words you learn",
+  },
+  {
+    icon: Zap,
+    title: "Adaptive Difficulty",
+    description: "Adjust complexity to match your proficiency level",
+  },
+  {
+    icon: Globe,
+    title: "Multiple Scenarios",
+    description: "Practice specific situations like travel, dining, or work",
+  },
+  {
+    icon: TrendingUp,
+    title: "Track Progress",
+    description: "See your improvement and vocabulary growth over time",
+  },
+];
+
+export default function HomePage() {
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
+    null
+  );
+
+  const handleStartLearning = () => {
+    if (selectedLanguage && selectedDifficulty) {
+      // TODO: Navigate to scenario selection
+      console.log("Starting with:", { selectedLanguage, selectedDifficulty });
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50/30 to-blue-50 dark:from-slate-950 dark:via-purple-950/20 dark:to-slate-900">
+      {/* Animated Background Pattern */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.1),rgba(255,255,255,0))]" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02] dark:opacity-[0.05]" />
+      </div>
+
+      {/* Header */}
+      <header className="relative z-10 border-b border-border/40 bg-background/80 backdrop-blur-md">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-2"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <div className="text-3xl">💬</div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+              LinguaChat
+            </h1>
+          </motion.div>
+          <ThemeToggle />
         </div>
+      </header>
+
+      <main className="relative z-10">
+        {/* Hero Section */}
+        <section className="container mx-auto px-4 py-16 md:py-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-4xl mx-auto"
+          >
+            <Badge className="mb-4 gap-2" variant="secondary">
+              <Sparkles className="w-3 h-3" />
+              AI-Powered Language Learning
+            </Badge>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight">
+              Master Any Language
+              <br />
+              Through Conversation
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Practice real conversations, receive instant feedback, and build
+              confidence in your target language with our AI-powered learning
+              companion.
+            </p>
+          </motion.div>
+
+          {/* Language Selection */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="mt-12"
+          >
+            <h3 className="text-2xl font-semibold text-center mb-6">
+              Choose Your Language
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+              {languages.map((lang, index) => (
+                <motion.div
+                  key={lang.code}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                >
+                  <Card
+                    className={`cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${
+                      selectedLanguage === lang.code
+                        ? "ring-2 ring-purple-600 bg-purple-50 dark:bg-purple-950/30"
+                        : "hover:bg-accent/50"
+                    }`}
+                    onClick={() => setSelectedLanguage(lang.code)}
+                  >
+                    <CardContent className="p-6 text-center">
+                      <div className="text-4xl mb-2">{lang.flag}</div>
+                      <div className="font-semibold text-sm">{lang.name}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {lang.native}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Difficulty Selection */}
+          {selectedLanguage && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mt-12"
+            >
+              <h3 className="text-2xl font-semibold text-center mb-6">
+                Select Your Level
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                {difficulties.map((diff, index) => (
+                  <motion.div
+                    key={diff.level}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <Card
+                      className={`cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${
+                        selectedDifficulty === diff.level
+                          ? "ring-2 ring-blue-600 bg-blue-50 dark:bg-blue-950/30"
+                          : "hover:bg-accent/50"
+                      }`}
+                      onClick={() => setSelectedDifficulty(diff.level)}
+                    >
+                      <CardContent className="p-6">
+                        <div className="text-3xl mb-2">{diff.icon}</div>
+                        <h4 className="font-semibold text-lg mb-1">
+                          {diff.label}
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          {diff.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* CTA Button */}
+          {selectedLanguage && selectedDifficulty && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="mt-8 text-center"
+            >
+              <Button
+                onClick={handleStartLearning}
+                size="lg"
+                className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg hover:shadow-xl transition-all gap-2 text-lg px-8 py-6"
+              >
+                Start Learning
+                <ArrowRight className="w-5 h-5" />
+              </Button>
+            </motion.div>
+          )}
+        </section>
+
+        {/* Features Section */}
+        <section className="container mx-auto px-4 py-16 md:py-24 bg-background/40 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Why LinguaChat?
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="h-full hover:shadow-lg transition-shadow bg-card/50 backdrop-blur-sm border-border/50">
+                    <CardContent className="p-6">
+                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500/10 to-blue-500/10 flex items-center justify-center mb-4">
+                        <feature.icon className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                      </div>
+                      <h4 className="font-semibold text-lg mb-2">
+                        {feature.title}
+                      </h4>
+                      <p className="text-muted-foreground">
+                        {feature.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+
+        {/* Footer */}
+        <footer className="container mx-auto px-4 py-8 text-center text-sm text-muted-foreground">
+          <p>© 2025 LinguaChat. Built with Next.js, OpenAI, and ❤️</p>
+        </footer>
       </main>
     </div>
   );
