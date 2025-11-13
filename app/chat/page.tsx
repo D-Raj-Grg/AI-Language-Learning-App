@@ -24,6 +24,7 @@ export default function ChatPage() {
     addCorrection,
     addVocabulary,
     setIsTyping,
+    startConversation,
   } = useStore();
 
   // Redirect if selections are missing
@@ -33,16 +34,17 @@ export default function ChatPage() {
     }
   }, [selectedLanguage, selectedDifficulty, selectedScenario, router]);
 
-  // Track conversation started
+  // Track conversation started and initialize start time
   useEffect(() => {
     if (selectedLanguage && selectedDifficulty && selectedScenario && messages.length === 0) {
+      startConversation();
       track("conversation_started", {
         language: selectedLanguage,
         difficulty: selectedDifficulty,
         scenario: selectedScenario.id,
       });
     }
-  }, [selectedLanguage, selectedDifficulty, selectedScenario, messages.length]);
+  }, [selectedLanguage, selectedDifficulty, selectedScenario, messages.length, startConversation]);
 
   const handleSendMessage = async (content: string) => {
     // Add user message

@@ -29,6 +29,19 @@ export interface VocabularyItem {
   reviewCount: number;
 }
 
+export interface ConversationHistory {
+  id: string;
+  language: string;
+  difficulty: "beginner" | "intermediate" | "advanced";
+  scenario: Scenario;
+  messages: Message[];
+  corrections: Correction[];
+  startedAt: Date;
+  endedAt: Date;
+  messageCount: number;
+  duration: number; // in seconds
+}
+
 interface AppState {
   // User selections
   selectedLanguage: string | null;
@@ -39,6 +52,8 @@ interface AppState {
   messages: Message[];
   corrections: Correction[];
   vocabulary: VocabularyItem[];
+  conversationHistory: ConversationHistory[];
+  conversationStartTime: number | null;
 
   // UI state
   isCorrectionsVisible: boolean;
@@ -59,6 +74,12 @@ interface AppState {
   // Clear conversation
   clearConversation: () => void;
   resetAll: () => void;
+
+  // Conversation history actions
+  startConversation: () => void;
+  saveConversation: () => void;
+  deleteConversation: (id: string) => void;
+  clearHistory: () => void;
 }
 
 export const useStore = create<AppState>()(
@@ -71,6 +92,8 @@ export const useStore = create<AppState>()(
       messages: [],
       corrections: [],
       vocabulary: [],
+      conversationHistory: [],
+      conversationStartTime: null,
       isCorrectionsVisible: true,
       isTyping: false,
 
@@ -112,18 +135,65 @@ export const useStore = create<AppState>()(
           messages: [],
           corrections: [],
           vocabulary: [],
+          conversationStartTime: null,
           isCorrectionsVisible: true,
           isTyping: false,
         }),
+
+      // Conversation history actions
+      startConversation: () =>
+        set({ conversationStartTime: Date.now() }),
+
+      saveConversation: () =>
+        set((state) => {
+          if (!state.selectedLanguage || !state.selectedDifficulty || !state.selectedScenario) {
+            return state;
+          }
+
+          if (state.messages.length === 0) {
+            return state;
+          }
+
+          const endTime = Date.now();
+          const startTime = state.conversationStartTime || endTime;
+          const duration = Math.floor((endTime - startTime) / 1000);
+
+          const conversation: ConversationHistory = {
+            id: `conv_${Date.now()}`,
+            language: state.selectedLanguage,
+            difficulty: state.selectedDifficulty,
+            scenario: state.selectedScenario,
+            messages: state.messages,
+            corrections: state.corrections,
+            startedAt: new Date(startTime),
+            endedAt: new Date(endTime),
+            messageCount: state.messages.length,
+            duration,
+          };
+
+          return {
+            conversationHistory: [conversation, ...state.conversationHistory],
+            conversationStartTime: null,
+          };
+        }),
+
+      deleteConversation: (id) =>
+        set((state) => ({
+          conversationHistory: state.conversationHistory.filter((c) => c.id !== id),
+        })),
+
+      clearHistory: () =>
+        set({ conversationHistory: [] }),
     }),
     {
       name: "linguachat-storage",
-      // Only persist user selections and vocabulary, not conversation data
+      // Persist user selections, vocabulary, and conversation history
       partialize: (state) => ({
         selectedLanguage: state.selectedLanguage,
         selectedDifficulty: state.selectedDifficulty,
         selectedScenario: state.selectedScenario,
         vocabulary: state.vocabulary,
+        conversationHistory: state.conversationHistory,
         isCorrectionsVisible: state.isCorrectionsVisible,
       }),
     }

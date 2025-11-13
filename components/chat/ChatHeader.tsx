@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Settings, MessageSquare, RotateCcw, BookOpen } from "lucide-react";
+import { ArrowLeft, Settings, MessageSquare, RotateCcw, BookOpen, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
@@ -31,6 +31,8 @@ export function ChatHeader() {
     isCorrectionsVisible,
     toggleCorrectionsVisibility,
     clearConversation,
+    saveConversation,
+    messages,
   } = useStore();
 
   const [showNewConversationDialog, setShowNewConversationDialog] =
@@ -41,9 +43,13 @@ export function ChatHeader() {
   };
 
   const handleNewConversation = () => {
+    // Save conversation to history if there are messages
+    if (messages.length > 0) {
+      saveConversation();
+    }
     clearConversation();
     setShowNewConversationDialog(false);
-    toast.success("Conversation cleared", {
+    toast.success("Conversation saved to history", {
       description: "Starting fresh! Your vocabulary has been saved.",
     });
     router.push("/scenarios");
@@ -95,6 +101,10 @@ export function ChatHeader() {
               <DropdownMenuItem onClick={() => router.push("/vocabulary")}>
                 <BookOpen className="w-4 h-4 mr-2" />
                 View Vocabulary
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push("/history")}>
+                <History className="w-4 h-4 mr-2" />
+                Conversation History
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
