@@ -112,11 +112,16 @@ An accessible, AI-powered language learning application that helps users practic
 
 ### 3.1 Tech Stack
 **Frontend**:
-- Next.js 14+ (App Router)
-- React 18+
+- Next.js 16 (App Router with latest features)
+- React 19
 - TypeScript
 - Tailwind CSS
-- shadcn/ui components
+- shadcn/ui components (minimalistic, accessible)
+- Magic UI (for modern animations and effects)
+  - Animated backgrounds
+  - Smooth transitions
+  - Particle effects
+  - Gradient animations
 
 **Backend**:
 - Next.js API Routes (serverless functions)
@@ -131,6 +136,8 @@ An accessible, AI-powered language learning application that helps users practic
 - `ai` by Vercel - For streaming responses
 - `zustand` or `jotai` - State management
 - `react-markdown` - For formatted responses
+- `framer-motion` - Smooth animations
+- `lucide-react` - Modern iconography
 
 ### 3.2 API Integration
 
@@ -268,11 +275,57 @@ An accessible, AI-powered language learning application that helps users practic
 - Three buttons/cards (Beginner, Intermediate, Advanced)
 - Brief description of each level
 
-### 4.3 Design Principles
-- **Minimalist**: Clean interface without distractions
-- **Encouraging**: Positive tone in all messaging
-- **Educational**: Corrections are learning opportunities, not failures
+### 4.3 Design Principles & Visual Style
+
+**Design Philosophy**:
+- **Minimalist**: Clean interface with purposeful whitespace, no visual clutter
+- **Modern**: Blur effects, glassmorphism, subtle gradients
+- **Encouraging**: Positive tone with delightful micro-interactions
+- **Educational**: Corrections as learning moments with smooth transitions
 - **Accessible**: High contrast, readable fonts (16px minimum), keyboard navigation
+
+**Visual Elements**:
+
+**Color Palette**:
+- Primary: Indigo/Purple gradient (modern, tech-forward)
+- Background: Dark mode default with light mode toggle
+  - Dark: Deep slate (bg-slate-950) with subtle noise texture
+  - Light: Soft gray (bg-gray-50) with warmth
+- Accents: Vibrant but tasteful (emerald for success, rose for corrections)
+- Glass effects: backdrop-blur with opacity for depth
+
+**Typography**:
+- Headings: Inter or Geist (modern, clean)
+- Body: System fonts for optimal readability
+- Code/Corrections: JetBrains Mono or Fira Code
+
+**Animations & Effects**:
+- **Page transitions**: Smooth fade-ins with slight scale
+- **Message appearance**: Slide-up with spring animation
+- **Corrections reveal**: Subtle bounce + highlight effect
+- **Background**: Animated gradient mesh or particle system
+- **Hover states**: Smooth elevation changes, glow effects
+- **Loading**: Skeleton screens with shimmer effect
+
+**Component Aesthetics**:
+- Cards: Subtle borders, soft shadows, glass effect backgrounds
+- Buttons: Modern padding, hover lift effect, gradient on primary CTAs
+- Chat bubbles: Rounded corners (xl), shadow depth, smooth scaling on send
+- Inputs: Clean focus states, animated border color transitions
+- Modals: Centered with backdrop blur, slide-in animation
+
+**Magic UI Integration**:
+- Hero section: Animated grid background or dots pattern
+- Language cards: Hover tilt effect with shine
+- Success states: Confetti or particle burst animations
+- Scene transitions: Smooth page morphing
+- Typing indicators: Animated dots with bounce
+
+**Dark Mode**:
+- Default theme (modern audience preference)
+- Toggle in header with sun/moon icon transition
+- Smooth theme transition (no flash)
+- Adjusted shadows and glows for dark backgrounds
 
 ---
 
