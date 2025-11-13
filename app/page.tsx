@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Logo } from "@/components/logo";
 
 const languages = [
   { code: "es", name: "Spanish", native: "Español", flag: "🇪🇸" },
@@ -105,12 +106,8 @@ export default function HomePage() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-2"
           >
-            <div className="text-3xl">💬</div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              LinguaChat
-            </h1>
+            <Logo size={36} showText={true} />
           </motion.div>
           <ThemeToggle />
         </div>

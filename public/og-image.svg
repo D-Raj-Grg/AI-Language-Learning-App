@@ -1,0 +1,69 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0f172a"/>
+
+  <!-- Gradient Overlay -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9333ea;stop-opacity:0.3" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:0.3" />
+    </linearGradient>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9333ea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+
+  <!-- Grid Pattern -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  </pattern>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Logo -->
+  <g transform="translate(100, 200)">
+    <path d="M 0 30 Q 0 0 30 0 L 100 0 Q 130 0 130 30 L 130 80 Q 130 110 100 110 L 40 110 L 10 140 L 10 110 Q 0 110 0 80 Z"
+          fill="url(#logoGradient)"
+          opacity="0.9"/>
+    <text x="35" y="75" font-family="system-ui, -apple-system, sans-serif" font-size="50" font-weight="bold" fill="white">L</text>
+    <circle cx="110" cy="20" r="8" fill="#fbbf24" opacity="0.9"/>
+  </g>
+
+  <!-- Title -->
+  <text x="280" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold" fill="url(#textGradient)">
+    LinguaChat
+  </text>
+
+  <!-- Subtitle -->
+  <text x="280" y="340" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="500" fill="rgba(255,255,255,0.8)">
+    AI-Powered Language Learning
+  </text>
+
+  <!-- Feature Pills -->
+  <g transform="translate(280, 380)">
+    <!-- Real Conversations -->
+    <rect x="0" y="0" width="200" height="45" rx="22.5" fill="rgba(147, 51, 234, 0.2)" stroke="rgba(147, 51, 234, 0.5)" stroke-width="1"/>
+    <text x="20" y="29" font-family="system-ui" font-size="18" fill="rgba(255,255,255,0.9)">💬 Real Chats</text>
+
+    <!-- Instant Feedback -->
+    <rect x="220" y="0" width="240" height="45" rx="22.5" fill="rgba(59, 130, 246, 0.2)" stroke="rgba(59, 130, 246, 0.5)" stroke-width="1"/>
+    <text x="240" y="29" font-family="system-ui" font-size="18" fill="rgba(255,255,255,0.9)">✨ Instant Feedback</text>
+
+    <!-- 5 Languages -->
+    <rect x="480" y="0" width="200" height="45" rx="22.5" fill="rgba(99, 102, 241, 0.2)" stroke="rgba(99, 102, 241, 0.5)" stroke-width="1"/>
+    <text x="500" y="29" font-family="system-ui" font-size="18" fill="rgba(255,255,255,0.9)">🌍 5 Languages</text>
+  </g>
+
+  <!-- Decorative Elements -->
+  <circle cx="1050" cy="150" r="100" fill="url(#logoGradient)" opacity="0.1"/>
+  <circle cx="1100" cy="500" r="80" fill="url(#logoGradient)" opacity="0.1"/>
+  <circle cx="150" cy="500" r="60" fill="url(#logoGradient)" opacity="0.1"/>
+</svg>
