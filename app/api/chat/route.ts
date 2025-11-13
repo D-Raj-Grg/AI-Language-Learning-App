@@ -4,6 +4,16 @@ import { streamText } from "ai";
 import { openai as openaiProvider } from "@ai-sdk/openai";
 import type { Scenario } from "@/lib/scenarios";
 
+// Input sanitization helper
+function sanitizeMessage(message: string): string {
+  // Remove HTML tags
+  const withoutHtml = message.replace(/<[^>]*>/g, "");
+  // Remove excessive whitespace
+  const normalized = withoutHtml.replace(/\s+/g, " ").trim();
+  // Limit length to 500 characters
+  return normalized.slice(0, 500);
+}
+
 // Rate limiting storage (in-memory for MVP, should use Redis in production)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
@@ -90,10 +100,40 @@ export async function POST(req: Request) {
         }),
         {
           status: 400,
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL || "*",
+            "Access-Control-Allow-Methods": "POST, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type",
+          },
         }
       );
     }
+
+    // Validate messages array
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "Invalid messages array" }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL || "*",
+          },
+        }
+      );
+    }
+
+    // Sanitize and validate messages
+    const sanitizedMessages = messages.map((msg) => {
+      if (!msg.content || typeof msg.content !== "string") {
+        throw new Error("Invalid message content");
+      }
+      return {
+        role: msg.role as "user" | "assistant",
+        content: sanitizeMessage(msg.content),
+      };
+    });
 
     // Build system prompt
     const systemPrompt = buildSystemPrompt({ language, difficulty, scenario });
@@ -103,10 +143,7 @@ export async function POST(req: Request) {
       model: openaiProvider(OPENAI_CONFIG.model),
       temperature: OPENAI_CONFIG.temperature,
       system: systemPrompt,
-      messages: messages.map((msg) => ({
-        role: msg.role as "user" | "assistant",
-        content: msg.content,
-      })),
+      messages: sanitizedMessages,
     });
 
     // Return streaming response
@@ -139,6 +176,19 @@ export async function POST(req: Request) {
       }
     );
   }
+}
+
+// Handle CORS preflight requests
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": process.env.NEXT_PUBLIC_APP_URL || "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Max-Age": "86400",
+    },
+  });
 }
 
 export const runtime = "edge";

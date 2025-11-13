@@ -1,8 +1,8 @@
 # LinguaChat - Development Tasks & Milestones
 
 **Last Updated**: November 13, 2025
-**Current Sprint**: Sprint 3 (Week 3)
-**Overall Progress**: 72% Complete
+**Current Sprint**: Sprint 3 (Week 4)
+**Overall Progress**: 75% Complete
 
 ---
 
@@ -15,7 +15,7 @@
 | **Landing Page** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Sprint 1: Chat Core** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Sprint 2: Features** | ✅ Complete | 100% | Nov 13, 2025 |
-| **Sprint 3: Polish** | 🔄 In Progress | 60% | Nov 13, 2025 (in progress) |
+| **Sprint 3: Polish** | 🔄 In Progress | 70% | Nov 13, 2025 (in progress) |
 
 ---
 
@@ -586,7 +586,7 @@
 ## ✨ Milestone 6: Sprint 3 - Polish & Optimization (IN PROGRESS 🔄)
 
 **Target Completion**: End of Week 3-4
-**Current Progress**: 60%
+**Current Progress**: 70%
 
 ### Week 3: UX Enhancements
 
@@ -688,14 +688,16 @@
 - [ ] Delete conversation (with confirmation)
 - [ ] Search conversations
 
-#### New Conversation Flow
-- [ ] "New Conversation" button in header
-- [ ] Confirmation modal if current conversation has messages
-- [ ] Clear current state
-- [ ] Route back to scenarios or home
-- [ ] Smooth transition
+#### New Conversation Flow ✅
+- [x] "New Conversation" button in header settings dropdown
+- [x] Confirmation dialog if current conversation has messages (AlertDialog)
+- [x] Clear current state (clearConversation action in store)
+- [x] Route back to scenarios page
+- [x] Smooth transition with React Router navigation
+- [x] Implementation: ChatHeader.tsx with AlertDialog component
+- [x] Integrated with Zustand store clearConversation action
 
-**Subtask Progress**: 0/7 complete
+**Completion**: November 13, 2025 ✅
 
 ---
 
@@ -703,18 +705,21 @@
 
 #### Performance Optimization
 - [ ] Code splitting:
-  - [ ] Route-based splitting (automatic in Next.js)
-  - [ ] Component lazy loading
-  - [ ] Dynamic imports for heavy components
+  - [x] Route-based splitting (automatic in Next.js App Router)
+  - [ ] Component lazy loading (future enhancement)
+  - [ ] Dynamic imports for heavy components (future enhancement)
 - [ ] Image optimization:
-  - [ ] Use Next.js Image component
-  - [ ] Compress all images
-  - [ ] WebP format where supported
-- [ ] Bundle analysis:
-  - [ ] Run `next build --analyze`
-  - [ ] Identify large dependencies
-  - [ ] Tree-shake unused code
-  - [ ] Target: <200KB initial bundle
+  - [x] SVG format for logo and icons (already using)
+  - [ ] Use Next.js Image component (no raster images yet)
+  - [ ] Compress all images (N/A - using SVGs)
+  - [ ] WebP format where supported (N/A - using SVGs)
+- [x] Bundle analysis:
+  - [x] Install @next/bundle-analyzer (v16.0.2)
+  - [x] Configure in next.config.ts (ANALYZE=true flag)
+  - [ ] Run `ANALYZE=true pnpm build` (pending)
+  - [ ] Identify large dependencies (pending)
+  - [ ] Tree-shake unused code (pending)
+  - [ ] Target: <200KB initial bundle (pending audit)
 - [ ] Lighthouse audit:
   - [ ] Performance score >90
   - [ ] Accessibility score >95
@@ -725,22 +730,41 @@
   - [ ] FID < 100ms
   - [ ] CLS < 0.1
 
-#### Security Hardening
-- [ ] Rate limiting implementation (completed in Sprint 1)
-- [ ] Input sanitization:
-  - [ ] Sanitize user messages
-  - [ ] Prevent XSS attacks
-  - [ ] Validate all inputs
-- [ ] API key protection:
-  - [ ] Verify keys not in client bundle
-  - [ ] Environment variables properly set
-  - [ ] No keys in source control
-- [ ] CORS configuration:
-  - [ ] Restrict origins in production
-  - [ ] Proper headers
-- [ ] Content Security Policy (CSP)
-- [ ] HTTPS enforcement
-- [ ] Dependency vulnerability scan
+#### Security Hardening ✅
+- [x] Rate limiting implementation (completed in Sprint 1)
+  - [x] In-memory rate limiter (10 requests/min per IP)
+  - [x] 429 status code on limit exceeded
+  - [x] Auto-cleanup of expired entries
+- [x] Input sanitization:
+  - [x] Sanitize user messages (sanitizeMessage function in app/api/chat/route.ts)
+  - [x] Prevent XSS attacks (HTML tag removal with regex)
+  - [x] Validate all inputs (type checking, array validation)
+  - [x] 500 character limit enforcement
+  - [x] Whitespace normalization
+- [x] API key protection:
+  - [x] Verify keys not in client bundle (server-side only)
+  - [x] Environment variables properly set (OPENAI_API_KEY)
+  - [x] No keys in source control (.env.local in .gitignore)
+  - [x] Build-time placeholder (sk-placeholder-for-build)
+  - [x] Runtime validation before API calls
+- [x] CORS configuration:
+  - [x] Restrict origins in production (NEXT_PUBLIC_APP_URL env var)
+  - [x] Proper headers (Access-Control-Allow-Origin, Methods, Headers)
+  - [x] OPTIONS handler for preflight requests
+  - [x] Max-Age: 86400 (24 hours)
+- [x] Security headers in next.config.ts:
+  - [x] X-DNS-Prefetch-Control (on)
+  - [x] Strict-Transport-Security (HSTS with 2-year max-age)
+  - [x] X-Frame-Options (SAMEORIGIN)
+  - [x] X-Content-Type-Options (nosniff)
+  - [x] X-XSS-Protection (1; mode=block)
+  - [x] Referrer-Policy (origin-when-cross-origin)
+  - [x] Permissions-Policy (camera, microphone, geolocation disabled)
+- [ ] Content Security Policy (CSP) - Partial (basic headers in place)
+- [x] HTTPS enforcement (handled by Vercel in production)
+- [ ] Dependency vulnerability scan (pending - use `pnpm audit`)
+
+**Completion**: November 13, 2025 ✅ (Core security features complete)
 
 #### Analytics Integration
 - [ ] Install Vercel Analytics
