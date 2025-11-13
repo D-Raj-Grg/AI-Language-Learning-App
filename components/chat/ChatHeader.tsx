@@ -6,6 +6,7 @@ import { ArrowLeft, Settings, MessageSquare, RotateCcw, BookOpen, History } from
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { track } from "@vercel/analytics";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,12 +28,14 @@ export function ChatHeader() {
   const router = useRouter();
   const {
     selectedScenario,
+    selectedLanguage,
     selectedDifficulty,
     isCorrectionsVisible,
     toggleCorrectionsVisibility,
     clearConversation,
     saveConversation,
     messages,
+    corrections,
   } = useStore();
 
   const [showNewConversationDialog, setShowNewConversationDialog] =
@@ -46,6 +49,15 @@ export function ChatHeader() {
     // Save conversation to history if there are messages
     if (messages.length > 0) {
       saveConversation();
+
+      // Track conversation completed
+      track("conversation_completed", {
+        language: selectedLanguage,
+        difficulty: selectedDifficulty,
+        scenario: selectedScenario?.id || "unknown",
+        messageCount: messages.length,
+        correctionCount: corrections.length,
+      });
     }
     clearConversation();
     setShowNewConversationDialog(false);

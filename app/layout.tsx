@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { ErrorBoundary } from "@/components/error-boundary";
 import { SkipToContent } from "@/components/skip-to-content";
 import { Analytics } from "@vercel/analytics/react";
+import { StructuredData } from "@/components/structured-data";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -98,6 +99,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <StructuredData />
+      </head>
       <body className="antialiased">
         <SkipToContent />
         <ErrorBoundary>

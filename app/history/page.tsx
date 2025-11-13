@@ -4,7 +4,7 @@ import { useStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ArrowLeft, Clock, MessageSquare, Trash2, Eye } from "lucide-react";
+import { ArrowLeft, Clock, MessageSquare, Trash2, Eye, Download } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -47,6 +47,28 @@ export default function HistoryPage() {
     });
   };
 
+  const exportConversation = (conversation: ConversationHistory) => {
+    const dataStr = JSON.stringify(conversation, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `linguachat-${conversation.language}-${conversation.scenario.id}-${new Date(conversation.startedAt).getTime()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportAllConversations = () => {
+    const dataStr = JSON.stringify(conversationHistory, null, 2);
+    const dataBlob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `linguachat-history-${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -72,12 +94,17 @@ export default function HistoryPage() {
           </div>
 
           {conversationHistory.length > 0 && (
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm">
-                  Clear All
-                </Button>
-              </AlertDialogTrigger>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={exportAllConversations}>
+                <Download className="h-4 w-4 mr-2" />
+                Export All
+              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="sm">
+                    Clear All
+                  </Button>
+                </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>Clear all history?</AlertDialogTitle>
@@ -97,6 +124,7 @@ export default function HistoryPage() {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+            </div>
           )}
         </div>
 
@@ -212,6 +240,14 @@ export default function HistoryPage() {
                         >
                           <Eye className="h-4 w-4 mr-2" />
                           View
+                        </Button>
+
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => exportConversation(conversation)}
+                        >
+                          <Download className="h-4 w-4" />
                         </Button>
 
                         <AlertDialog>

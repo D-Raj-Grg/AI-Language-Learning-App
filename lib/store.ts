@@ -82,6 +82,8 @@ interface AppState {
   clearHistory: () => void;
 }
 
+const STORE_VERSION = 1;
+
 export const useStore = create<AppState>()(
   persist(
     (set) => ({
@@ -187,6 +189,7 @@ export const useStore = create<AppState>()(
     }),
     {
       name: "linguachat-storage",
+      version: STORE_VERSION,
       // Persist user selections, vocabulary, and conversation history
       partialize: (state) => ({
         selectedLanguage: state.selectedLanguage,
@@ -196,6 +199,14 @@ export const useStore = create<AppState>()(
         conversationHistory: state.conversationHistory,
         isCorrectionsVisible: state.isCorrectionsVisible,
       }),
+      // Migration function for future store updates
+      migrate: (persistedState: unknown, _version: number) => {
+        // Example migration logic for future versions
+        // if (_version < 1) {
+        //   // Migrate from version 0 to version 1
+        // }
+        return persistedState as AppState;
+      },
     }
   )
 );
