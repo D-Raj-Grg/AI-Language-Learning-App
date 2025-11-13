@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   MessageCircle,
@@ -16,6 +17,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Logo } from "@/components/logo";
+import { useStore } from "@/lib/store";
 
 const languages = [
   { code: "es", name: "Spanish", native: "Español", flag: "🇪🇸" },
@@ -25,7 +27,12 @@ const languages = [
   { code: "ja", name: "Japanese", native: "日本語", flag: "🇯🇵" },
 ];
 
-const difficulties = [
+const difficulties: Array<{
+  level: "beginner" | "intermediate" | "advanced";
+  label: string;
+  description: string;
+  icon: string;
+}> = [
   {
     level: "beginner",
     label: "Beginner",
@@ -80,15 +87,30 @@ const features = [
 ];
 
 export default function HomePage() {
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(
-    null
+  const router = useRouter();
+  const { setLanguage, setDifficulty, selectedLanguage: storedLanguage, selectedDifficulty: storedDifficulty } = useStore();
+
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(storedLanguage);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<"beginner" | "intermediate" | "advanced" | null>(
+    storedDifficulty
   );
+
+  // Sync local state with store
+  useEffect(() => {
+    if (selectedLanguage) {
+      setLanguage(selectedLanguage);
+    }
+  }, [selectedLanguage, setLanguage]);
+
+  useEffect(() => {
+    if (selectedDifficulty) {
+      setDifficulty(selectedDifficulty);
+    }
+  }, [selectedDifficulty, setDifficulty]);
 
   const handleStartLearning = () => {
     if (selectedLanguage && selectedDifficulty) {
-      // TODO: Navigate to scenario selection
-      console.log("Starting with:", { selectedLanguage, selectedDifficulty });
+      router.push("/scenarios");
     }
   };
 

@@ -196,40 +196,40 @@
 ## 🚀 Milestone 4: Sprint 1 - Core Chat Experience (IN PROGRESS 🔄)
 
 **Target Completion**: End of Week 1
-**Current Progress**: 20%
+**Current Progress**: 45%
 
-### Day 1-2: Scenario Selection Page
+### Day 1-2: Scenario Selection Page ✅
 
 #### Page Structure
-- [ ] Create `/app/scenarios/page.tsx`
-- [ ] Design page layout:
-  - [ ] Header with selected language/difficulty
-  - [ ] Page title and description
-  - [ ] Grid of scenario cards (responsive)
-  - [ ] Back button to home
-  - [ ] Continue to chat button (disabled until selection)
+- [x] Create `/app/scenarios/page.tsx`
+- [x] Design page layout:
+  - [x] Header with selected language/difficulty
+  - [x] Page title and description
+  - [x] Grid of scenario cards (responsive)
+  - [x] Back button to home
+  - [x] Continue to chat button (disabled until selection)
 
 #### Scenario Component
-- [ ] Create `components/scenarios/ScenarioCard.tsx`
-- [ ] Card design with:
-  - [ ] Icon/emoji for visual identity
-  - [ ] Scenario title
-  - [ ] Description (2-3 sentences)
-  - [ ] Recommended difficulty badge
-  - [ ] Hover effects (scale, shadow, glow)
-  - [ ] Selection state with ring indicator
-  - [ ] Click handler
+- [x] Create `components/scenarios/ScenarioCard.tsx`
+- [x] Card design with:
+  - [x] Icon/emoji for visual identity
+  - [x] Scenario title
+  - [x] Description (2-3 sentences)
+  - [x] Recommended difficulty badge
+  - [x] Hover effects (scale, shadow, glow)
+  - [x] Selection state with ring indicator
+  - [x] Click handler
 
 #### Scenario Data
-- [ ] Create `lib/scenarios.ts` with 7 scenarios:
-  - [ ] Casual Introduction & Small Talk
-  - [ ] Ordering at a Restaurant
-  - [ ] Shopping & Asking for Directions
-  - [ ] Travel & Hotel Check-in
-  - [ ] Job Interview Practice
-  - [ ] Everyday Conversations
-  - [ ] Free-form Chat
-- [ ] Define TypeScript interface:
+- [x] Create `lib/scenarios.ts` with 7 scenarios:
+  - [x] Casual Introduction & Small Talk
+  - [x] Ordering at a Restaurant
+  - [x] Shopping & Asking for Directions
+  - [x] Travel & Hotel Check-in
+  - [x] Job Interview Practice
+  - [x] Everyday Conversations
+  - [x] Free-form Chat
+- [x] Define TypeScript interface:
   ```typescript
   interface Scenario {
     id: string
@@ -242,11 +242,11 @@
   ```
 
 #### State Management
-- [ ] Create Zustand store (`lib/store.ts`)
-- [ ] Store structure:
-  - [ ] selectedLanguage
-  - [ ] selectedDifficulty
-  - [ ] selectedScenario
+- [x] Create Zustand store (`lib/store.ts`)
+- [x] Store structure:
+  - [x] selectedLanguage
+  - [x] selectedDifficulty
+  - [x] selectedScenario
   - [ ] Actions: setLanguage, setDifficulty, setScenario
 - [ ] Persist language/difficulty from homepage
 - [ ] Pass scenario to chat page
