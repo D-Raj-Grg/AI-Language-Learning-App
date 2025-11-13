@@ -247,17 +247,18 @@
   - [x] selectedLanguage
   - [x] selectedDifficulty
   - [x] selectedScenario
-  - [ ] Actions: setLanguage, setDifficulty, setScenario
-- [ ] Persist language/difficulty from homepage
-- [ ] Pass scenario to chat page
+  - [x] Actions: setLanguage, setDifficulty, setScenario
+- [x] Persist language/difficulty from homepage
+- [x] Pass scenario to chat page
 
 #### Navigation
-- [ ] Route from homepage to `/scenarios`
-- [ ] Pass state via URL params or store
-- [ ] Validate selections (redirect if missing)
-- [ ] Route to `/chat` on continue
+- [x] Route from homepage to `/scenarios`
+- [x] Pass state via URL params or store
+- [x] Validate selections (redirect if missing)
+- [x] Route to `/chat` on continue
 
-**Subtask Progress**: 0/6 complete
+**Subtask Progress**: 6/6 complete ✅
+**Completion**: November 13, 2025
 
 ---
 
