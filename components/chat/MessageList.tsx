@@ -49,7 +49,7 @@ export function MessageList({ messages, isTyping = false }: MessageListProps) {
           <div className="text-6xl mb-4">💬</div>
           <h2 className="text-2xl font-semibold mb-2">Start Your Conversation</h2>
           <p className="text-muted-foreground">
-            Begin practicing by sending your first message. Don't worry about making mistakes – that's how you learn!
+            Begin practicing by sending your first message. Don&apos;t worry about making mistakes – that&apos;s how you learn!
           </p>
         </div>
       </div>

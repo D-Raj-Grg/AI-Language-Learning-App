@@ -1,8 +1,8 @@
 # LinguaChat - Development Tasks & Milestones
 
 **Last Updated**: November 13, 2025
-**Current Sprint**: Sprint 1 (Week 1)
-**Overall Progress**: 35% Complete
+**Current Sprint**: Sprint 2 (Week 2)
+**Overall Progress**: 45% Complete
 
 ---
 
@@ -13,8 +13,8 @@
 | **Foundation Setup** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Branding & Design** | ✅ Complete | 100% | Nov 13, 2025 |
 | **Landing Page** | ✅ Complete | 100% | Nov 13, 2025 |
-| **Sprint 1: Chat Core** | 🔄 In Progress | 85% | Target: Week 1 |
-| **Sprint 2: Features** | ⏳ Not Started | 0% | Target: Week 2 |
+| **Sprint 1: Chat Core** | ✅ Complete | 100% | Nov 13, 2025 |
+| **Sprint 2: Features** | 🔄 In Progress | 50% | Target: Week 2 |
 | **Sprint 3: Polish** | ⏳ Not Started | 0% | Target: Week 3-4 |
 
 ---
@@ -193,10 +193,10 @@
 
 ---
 
-## 🚀 Milestone 4: Sprint 1 - Core Chat Experience (IN PROGRESS 🔄)
+## 🚀 Milestone 4: Sprint 1 - Core Chat Experience (COMPLETE ✅)
 
 **Target Completion**: End of Week 1
-**Current Progress**: 85%
+**Current Progress**: 100%
 
 ### Day 1-2: Scenario Selection Page ✅
 
@@ -418,16 +418,16 @@
 
 ---
 
-## 🔧 Milestone 5: Sprint 2 - Corrections & Vocabulary (PENDING ⏳)
+## 🔧 Milestone 5: Sprint 2 - Corrections & Vocabulary (IN PROGRESS 🔄)
 
 **Target Completion**: End of Week 2
-**Current Progress**: 0%
+**Current Progress**: 50%
 
-### Day 1-3: Corrections System
+### Day 1-3: Corrections System ✅
 
 #### Corrections Data Model
-- [ ] Update OpenAI prompt for corrections
-- [ ] Define Correction interface:
+- [x] Update OpenAI prompt for corrections (completed in Sprint 1)
+- [x] Define Correction interface in lib/store.ts:
   ```typescript
   interface Correction {
     id: string
@@ -438,46 +438,48 @@
     messageId: string
   }
   ```
-- [ ] Update API response format
-- [ ] Parse corrections from AI response
+- [x] Update API response format (JSON with corrections array)
+- [x] Parse corrections from AI response and add to store
 
 #### Correction UI Components
-- [ ] Create `components/corrections/CorrectionPanel.tsx`
-- [ ] Sidebar design:
-  - [ ] Toggleable visibility
-  - [ ] Slide-in/out animation
-  - [ ] Header with title and close button
-  - [ ] List of correction cards
-  - [ ] Empty state when no corrections
-- [ ] Create `components/corrections/CorrectionCard.tsx`
-- [ ] Card design:
-  - [ ] Original text (struck through, red)
-  - [ ] Arrow icon
-  - [ ] Corrected text (green highlight)
-  - [ ] Category badge (color-coded)
-  - [ ] Expandable explanation section
-  - [ ] Collapse/expand animation
+- [x] Create `components/corrections/CorrectionPanel.tsx`
+- [x] Sidebar design:
+  - [x] Toggleable visibility with AnimatePresence
+  - [x] Slide-in/out animation (spring physics)
+  - [x] Header with title and close button
+  - [x] Scrollable list of correction cards
+  - [x] Empty state when no corrections
+  - [x] Mobile overlay and responsive design
+- [x] Create `components/corrections/CorrectionCard.tsx`
+- [x] Card design:
+  - [x] Original text (struck through, red)
+  - [x] Arrow icon
+  - [x] Corrected text (green highlight)
+  - [x] Category badge (color-coded: grammar/vocabulary/spelling/style)
+  - [x] Expandable explanation section
+  - [x] Collapse/expand animation
 
 #### Inline Corrections
-- [ ] Add correction indicator icon to user messages
-- [ ] Show count badge (number of corrections)
-- [ ] Click to open corrections panel
-- [ ] Highlight corrected text in message
+- [x] Store corrections in message objects
+- [x] Show count badge in message (ChatMessage component)
+- [x] Corrections panel accessible via header toggle
+- [ ] Click on correction badge to scroll to correction in panel (future enhancement)
 
 #### Corrections Toggle
-- [ ] Add toggle switch in chat header
-- [ ] Store preference in state
-- [ ] Show/hide panel based on toggle
-- [ ] Persist preference in localStorage
-- [ ] Smooth transition animation
+- [x] Add toggle in chat header settings dropdown
+- [x] Store preference in Zustand state
+- [x] Show/hide panel based on toggle
+- [x] Persist preference in localStorage
+- [x] Smooth transition animation
 
 #### Corrections State
-- [ ] Add corrections array to Zustand store
-- [ ] Actions: addCorrection, clearCorrections
-- [ ] Filter corrections by message
-- [ ] Track viewed/unviewed corrections
+- [x] Add corrections array to Zustand store
+- [x] Actions: addCorrection, addMessage with corrections
+- [x] Corrections linked to messages via messageId
+- [x] clearConversation clears corrections
 
-**Subtask Progress**: 0/5 complete
+**Subtask Progress**: 5/5 complete ✅
+**Completion**: November 13, 2025
 
 ---
 

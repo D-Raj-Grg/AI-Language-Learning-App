@@ -1,4 +1,4 @@
-import { openai, OPENAI_CONFIG } from "@/lib/openai";
+import { OPENAI_CONFIG } from "@/lib/openai";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { streamText } from "ai";
 import { openai as openaiProvider } from "@ai-sdk/openai";

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChatHeader } from "@/components/chat/ChatHeader";
 import { MessageList } from "@/components/chat/MessageList";
 import { ChatInput } from "@/components/chat/ChatInput";
+import { CorrectionPanel } from "@/components/corrections/CorrectionPanel";
 import { useStore } from "@/lib/store";
 import { nanoid } from "nanoid";
 
@@ -18,6 +19,8 @@ export default function ChatPage() {
     messages,
     isTyping,
     addMessage,
+    addCorrection,
+    addVocabulary,
     setIsTyping,
   } = useStore();
 
@@ -94,8 +97,9 @@ export default function ChatPage() {
       // Parse the complete response
       try {
         const parsed = JSON.parse(accumulatedResponse);
+        const aiMessageId = nanoid();
         const aiMessage = {
-          id: nanoid(),
+          id: aiMessageId,
           role: "assistant" as const,
           content: parsed.message || accumulatedResponse,
           corrections: parsed.corrections || [],
@@ -103,11 +107,44 @@ export default function ChatPage() {
         };
         addMessage(aiMessage);
 
+        // Add corrections to store
+        if (parsed.corrections && parsed.corrections.length > 0) {
+          parsed.corrections.forEach((correction: {
+            original: string;
+            corrected: string;
+            explanation: string;
+            category: "grammar" | "vocabulary" | "spelling" | "style";
+          }) => {
+            addCorrection({
+              id: nanoid(),
+              original: correction.original,
+              corrected: correction.corrected,
+              explanation: correction.explanation,
+              category: correction.category,
+              messageId: userMessage.id, // Link to the user's message that had the error
+            });
+          });
+        }
+
         // Add vocabulary items to store
         if (parsed.vocabulary && parsed.vocabulary.length > 0) {
-          // TODO: Add vocabulary items to store when that function is implemented
+          parsed.vocabulary.forEach((item: {
+            word: string;
+            translation: string;
+            context: string;
+          }) => {
+            addVocabulary({
+              id: nanoid(),
+              word: item.word,
+              translation: item.translation,
+              context: item.context,
+              language: selectedLanguage || "unknown",
+              learnedAt: new Date(),
+              reviewCount: 0,
+            });
+          });
         }
-      } catch (e) {
+      } catch {
         // If parsing fails, use raw content
         const aiMessage = {
           id: nanoid(),
@@ -157,6 +194,9 @@ export default function ChatPage() {
 
       {/* Input */}
       <ChatInput onSend={handleSendMessage} disabled={isTyping} />
+
+      {/* Corrections Panel */}
+      <CorrectionPanel />
     </div>
   );
 }
